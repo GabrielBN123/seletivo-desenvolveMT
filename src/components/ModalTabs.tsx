@@ -1,68 +1,70 @@
-import { useState, useEffect } from "react";
-import Detalhes from "../pages/Detalhes";
-import EnviarInformacoes from "../pages/EnviarInformacoes";
-import { useParams } from "react-router-dom";
-import { api } from "../services/api";
+"use client"
+
+import { useState } from "react"
+import Detalhes from "../pages/Detalhes"
+import EnviarInformacoes from "../pages/EnviarInformacoes"
+import { useParams } from "react-router-dom"
 
 interface PessoaResponse {
-  vivo: boolean;
+  vivo: boolean
 }
 
 export default function ModalTabs() {
-  const { id } = useParams();
-  const [abaAtiva, setAbaAtiva] = useState<"detalhes" | "informacoes">("detalhes");
-  // const [vivo, setVivo] = useState<boolean>(true);
-
-  // useEffect(() => {
-  //   async function buscarSituacao() {
-  //     if (!id) return;
-  //     try {
-  //       const res = await api.get<PessoaResponse>(`/v1/pessoas/${id}`);
-  //       // setVivo(res.data.vivo);
-  //     } catch (err) {
-  //       console.error("Erro ao buscar situacao da pessoa:", err);
-  //     }
-  //   }
-  //   buscarSituacao();
-  // }, [id]);
+  const { id } = useParams()
+  const [abaAtiva, setAbaAtiva] = useState<"detalhes" | "informacoes">("detalhes")
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded shadow-lg max-w-4xl w-full p-4">
-      <div className="flex justify-between border-b mb-4">
-        <button
-          onClick={() => setAbaAtiva("detalhes")}
-          className={`px-4 py-2 ${
-            abaAtiva === "detalhes"
-              ? "border-b-2 border-blue-500 dark:border-amber-300 font-bold dark:text-white"
-              : "text-gray-500"
-          }`}
-        >
-          Detalhes
-        </button>
+    <div className="w-full">
+      <div className="sticky top-0 bg-background/95 backdrop-blur-sm border-b border-border p-6 pb-0">
+        <div className="flex gap-1 bg-muted p-1 rounded-lg w-fit">
+          <button
+            onClick={() => setAbaAtiva("detalhes")}
+            className={`px-6 py-3 rounded-md text-sm font-medium transition-all duration-200 ${
+              abaAtiva === "detalhes"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground hover:bg-background/50"
+            }`}
+          >
+            <div className="flex dark:text-gray-50 items-center gap-2 text-light-500">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              Detalhes
+            </div>
+          </button>
 
-        <button
-          onClick={() => setAbaAtiva("informacoes")}
-          // disabled={!vivo}
-          className={`px-4 py-2 ${
-            abaAtiva === "informacoes"
-              ? "border-b-2 border-blue-500 dark:border-amber-300 font-bold dark:text-white"
-              : "text-gray-500"
-          }
-           
-        
-          `}
-        >
-          Enviar Informações
-        </button>
+          <button
+            onClick={() => setAbaAtiva("informacoes")}
+            className={`px-6 py-3 rounded-md text-sm font-medium transition-all duration-200 ${
+              abaAtiva === "informacoes"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground hover:bg-background/50"
+            }`}
+          >
+            <div className="flex dark:text-gray-50 items-center gap-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                />
+              </svg>
+              Enviar Informações
+            </div>
+          </button>
+        </div>
       </div>
 
-      <div>
+      <div className="p-6">
         {abaAtiva === "detalhes" && <Detalhes />}
-        {abaAtiva === "informacoes" && 
-        id 
-        // && vivo 
-        && <EnviarInformacoes />}
+        {abaAtiva === "informacoes" && id && <EnviarInformacoes />}
       </div>
     </div>
-  );
+  )
 }

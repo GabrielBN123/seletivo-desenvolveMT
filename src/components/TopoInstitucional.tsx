@@ -1,132 +1,146 @@
-import { useEffect, useState } from "react";
-import logo from "../assets/logo-pjc.png";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useFiltro } from "./FiltroContext";
-import { buscarEstatisticas } from "../services/api";
+"use client"
+
+import { useEffect, useState } from "react"
+import logo from "../assets/logo-pjc.png"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import { useFiltro } from "./FiltroContext"
+import { buscarEstatisticas } from "../services/api"
 
 export default function TopoInstitucional() {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const url = "https://abitus-api.geia.vip";
-    const { mostrarFiltros, alternarFiltros } = useFiltro();
-    const isHome = location.pathname === "/";
-    const isDetalhes = location.pathname.startsWith("/detalhes/");
-    const isEnviar = location.pathname.startsWith("/enviar-informacoes/");
-    const mostrarBotoes = isDetalhes || isEnviar;
-    const [estatisticas, setEstatisticas] = useState<{ quantPessoasDesaparecidas: number; quantPessoasEncontradas: number } | null>(null);
+  const location = useLocation()
+  const navigate = useNavigate()
+  const url = "https://abitus-api.geia.vip"
+  const { mostrarFiltros, alternarFiltros, tema, alternarTema } = useFiltro()
+  const isHome = location.pathname === "/"
+  const isDetalhes = location.pathname.startsWith("/detalhes/")
+  const isEnviar = location.pathname.startsWith("/enviar-informacoes/")
+  const mostrarBotoes = isDetalhes || isEnviar
+  const [estatisticas, setEstatisticas] = useState<{
+    quantPessoasDesaparecidas: number
+    quantPessoasEncontradas: number
+  } | null>(null)
 
-    const [dark, setDark] = useState(() => {
-        return localStorage.getItem("theme") === "dark";
-    });
+  const [mostrarSeletorTema, setMostrarSeletorTema] = useState(false)
 
-    useEffect(() => {
-        const root = document.documentElement;
-        if (dark) {
-            root.classList.add("dark");
-            localStorage.setItem("theme", "dark");
-        } else {
-            root.classList.remove("dark");
-            localStorage.setItem("theme", "light");
-        }
-    }, [dark]);
+  useEffect(() => {
+    const carregarEstatisticas = async () => {
+      try {
+        const res = await buscarEstatisticas()
+        setEstatisticas(res.data)
+      } catch (err) {
+        console.error("Erro ao carregar estatísticas:", err)
+      }
+    }
 
-    useEffect(() => {
-        const carregarEstatisticas = async () => {
-            try {
-                const res = await buscarEstatisticas(); 
-                setEstatisticas(res.data);
-            } catch (err) {
-                console.error("Erro ao carregar estatísticas:", err);
-            }
-        };
-    
-        carregarEstatisticas();
-    }, []);
+    carregarEstatisticas()
+  }, [])
 
-    return (
-        <header className="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-white shadow">
-            <div className="w-full border-b border-gray-700">
-                <div className="max-w-7xl mx-auto px-4 py-1 flex justify-between items-center text-sm">
-                    <div className="flex gap-4 md:flex-row  items-center">
-                        <span>MT.GOV.BR</span>
-                        <Link to="#" className="hover:underline">Contatos</Link>
-                        <span className="hidden md:inline">Alternar modo escuro/claro:</span>
-                        <button
-                            onClick={() => setDark((prev) => !prev)}
-                            className="text-lg hover:text-yellow-300 transition"
-                            title="Alternar modo escuro/claro"
-                        >
-                            {dark ? "☀" : "🌙"}
-                        </button>
-                    </div>
+  const obterIconeTema = () => {
+    if (tema === "system") return "🖥️"
+    return tema === "dark" ? "🌙" : "☀️"
+  }
+
+  const obterTextoTema = () => {
+    if (tema === "system") return "Sistema"
+    return tema === "dark" ? "Escuro" : "Claro"
+  }
+
+  return (
+    <header className="w-full bg-primary bg-gray-900 text-gray-50 shadow-lg">
+      {/* Top utility bar */}
+      <div className="w-full border-b border-border/20">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center text-sm">
+          <div className="flex gap-6 items-center">
+            <span className="font-medium">MT.GOV.BR</span>
+            <Link to="#" className="hover:text-accent transition-colors">
+              Contatos
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {mostrarSeletorTema && <div className="fixed inset-0 z-40" onClick={() => setMostrarSeletorTema(false)} />}
+
+      {/* Main header */}
+      <div className="w-full bg-card">
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
+            <div className="flex items-center gap-8">
+              <img src={logo || "/placeholder.svg"} alt="PJC-MT" className="h-20 w-auto" />
+              <div className="text-center lg:text-left">
+                <h1 className="text-2xl lg:text-3xl font-bold text-card-foreground leading-tight">
+                  QUADRO DE PESSOAS DESAPARECIDAS
+                </h1>
+                <p className="text-lg text-muted-foreground font-medium mt-1">Polícia Judiciária Civil - Mato Grosso</p>
+              </div>
+            </div>
+            <div className="text-center lg:text-right bg-accent/10 rounded-xl p-4">
+              <p className="text-xl font-bold text-card-foreground">
+                Denuncie: <span className="text-accent">197 / 181</span>
+              </p>
+              <p className="text-muted-foreground font-medium">3613-6981</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation and stats */}
+      <nav className="w-full bg-primary/95 backdrop-blur-sm border-t border-border/20">
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
+            {/* Navigation buttons */}
+            <div className="flex flex-wrap gap-4 items-center">
+              {isHome && (
+                <button
+                  onClick={alternarFiltros}
+                  className="px-4 py-2 bg-accent hover:bg-accent/90 text-accent-foreground rounded-lg font-medium transition-colors flex items-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+                    />
+                  </svg>
+                  {mostrarFiltros ? "Ocultar Filtros" : "Filtros de Busca"}
+                </button>
+              )}
+
+              {mostrarBotoes && (
+                <div className="flex gap-3">
+                  <Link
+                    to="/?pagina=1"
+                    className="px-4 py-2 bg-secondary hover:bg-secondary/90 text-secondary-foreground rounded-lg font-medium transition-colors"
+                  >
+                    Página Inicial
+                  </Link>
+                  <button
+                    onClick={() => navigate(-1)}
+                    className="px-4 py-2 bg-muted hover:bg-muted/80 text-muted-foreground rounded-lg font-medium transition-colors"
+                  >
+                    Voltar
+                  </button>
                 </div>
+              )}
             </div>
 
-
-            <div className="w-full border-b border-gray-700 bg-gray-900">
-                <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
-                    <div className="flex items-center gap-28">
-                        <img src={logo} alt="PJC" className="h-16" />
-                        <div>
-                            <h1 className="text-xl font-bold leading-tight text-center">
-                                QUADRO DE PESSOAS DESAPARECIDAS - PJC-MT
-                            </h1>
-                        </div>
-                    </div>
-                    <div className="text-right mt-4 md:mt-0">
-                        <p className="text-lg font-bold">
-                            Denuncie: <span className="text-blue-400">197/181</span>
-                        </p>
-                        <p className="text-sm">3613-6981</p>
-                    </div>
+            {/* Statistics */}
+            {estatisticas && (
+              <div className="flex gap-4">
+                <div className="bg-destructive/10 border border-destructive/20 text-destructive rounded-lg px-4 py-2 text-center min-w-[120px]">
+                  <p className="text-xs font-medium uppercase tracking-wide">Desaparecidos</p>
+                  <p className="text-2xl font-bold">{estatisticas.quantPessoasDesaparecidas}</p>
                 </div>
-            </div>
-
-            <nav className="w-full bg-gray-800 border-t border-gray-700">
-                <div className="max-w-7xl mx-auto px-4 py-2 flex flex-col md:flex-row justify-between gap-4 text-sm font-semibold">
-                    {/* <Link to="#">INSTITUCIONAL</Link>
-          <Link to="#">LEGISLAÇÃO</Link>
-          <Link to="#">IMPRENSA</Link>
-          <Link to="#">SERVIDOR</Link>
-          <Link to="#">UNIDADES</Link>
-          <Link to="#">ESTATÍSTICA</Link>
-          <Link to="#">OUVIDORIA</Link>
-          <Link to="#">TRANSPARÊNCIA</Link>
-          <Link to="#">PERGUNTAS FREQUENTES</Link> */}
-
-                    {isHome && (
-                        <button onClick={alternarFiltros} className="hover:underline text-white">
-                            {mostrarFiltros ? "ESCONDER FILTROS" : "MOSTRAR FILTROS DETALHADOS DE BUSCA"}
-                        </button>
-                    )}
-                    {estatisticas && (
-                        <div className="mb-1 grid grid-cols-1 sm:grid-cols-2 gap-2 text-center">
-                            <div className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded p-1 shadow">
-                                <h2 className="text-xs font-bold">Desaparecidos</h2>
-                                <p className="text-1xl">{estatisticas.quantPessoasDesaparecidas}</p>
-                            </div>
-                            <div className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded p-1 shadow">
-                                <h2 className="text-xs font-bold">Localizados</h2>
-                                <p className="text-1xl">{estatisticas.quantPessoasEncontradas}</p>
-                            </div>
-                        </div>
-                    )}
-
-                    {mostrarBotoes && (
-                        <>
-                            <Link to="/?pagina=1" className="hover:underline text-white">
-                                TELA INICIAL
-                            </Link>
-                            <button
-                                onClick={() => navigate(-1)}
-                                className="hover:underline text-white"
-                            >
-                                VOLTAR
-                            </button>
-                        </>
-                    )}
+                <div className="bg-accent/10 border border-accent/20 text-accent rounded-lg px-4 py-2 text-center min-w-[120px]">
+                  <p className="text-xs font-medium uppercase tracking-wide">Localizados</p>
+                  <p className="text-2xl font-bold">{estatisticas.quantPessoasEncontradas}</p>
                 </div>
-            </nav>
-        </header>
-    );
+              </div>
+            )}
+          </div>
+        </div>
+      </nav>
+    </header>
+  )
 }
