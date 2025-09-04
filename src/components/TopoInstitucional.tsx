@@ -46,9 +46,9 @@ export default function TopoInstitucional() {
   }
 
   return (
-    <header className="w-full bg-primary bg-gray-900 text-gray-50 shadow-lg">
+    <header className="w-full text-gray-50 shadow-lg header-pjc-style" >
       {/* Top utility bar */}
-      <div className="w-full border-b border-border/20">
+      <div className="w-full">
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center text-sm">
           <div className="flex gap-6 items-center">
             <span className="font-medium">MT.GOV.BR</span>
@@ -85,7 +85,7 @@ export default function TopoInstitucional() {
       </div>
 
       {/* Navigation and stats */}
-      <nav className="w-full bg-primary/95 backdrop-blur-sm border-t border-border/20">
+      <nav className="w-full bg-primary/95 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
             {/* Navigation buttons */}

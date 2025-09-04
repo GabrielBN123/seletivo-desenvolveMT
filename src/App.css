@@ -41,3 +41,7 @@
 .read-the-docs {
   color: #888;
 }
+
+.header-pjc-style{
+  background: linear-gradient(to right,#000000 0,#333333 40%,#333333 60%,#000000 100%)!important;
+}
