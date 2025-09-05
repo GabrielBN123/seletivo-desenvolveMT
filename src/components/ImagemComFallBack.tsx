@@ -32,7 +32,7 @@ export default function ImagemComFallback({
   const borderColor =
     destaqueStatus === "Morto" ? "border-red-400 " : "border-green-400";
   return (
-    <div className={`relative ${borderColor} border-4 rounded`}>
+    <div className={` ${borderColor} border-4 rounded`}>
       {carregando && <div className={skeletonClassName} />}
 
       <span className={`absolute top-2 left-2 px-2 py-1 text-xs font-semibold rounded-full z-10
