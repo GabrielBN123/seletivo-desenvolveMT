@@ -1,14 +1,8 @@
 # 🚀 Projeto Prático - React + TypeScript + Vite
 
-Este é um projeto prático desenvolvido para treinar e aplicar conceitos de **Git/GitHub**, além de explorar um setup moderno de **React** com **TypeScript** e **Vite**.
+Este é um projeto prático desenvolvido para o processo seletivo DesenvolveMT.
 
----
-
-## 📌 Sobre o Projeto
-
-O objetivo deste repositório é servir como exemplo de versionamento com Git, boas práticas de commits e organização de código.  
-Além disso, traz uma base pronta para criação de aplicações React rápidas e tipadas, utilizando o Vite como bundler.
-
+Proprietário: Gabriel Batista
 ---
 
 ## 🛠️ Tecnologias Utilizadas
