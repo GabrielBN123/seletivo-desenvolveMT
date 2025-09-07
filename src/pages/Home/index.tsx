@@ -76,10 +76,10 @@ export default function Home() {
         {/* Filter Modal */}
         {mostrarFiltros && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm bg-black/30">
-            <div className="bg-gray-50 border border-border rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+            <div className="bg-gray-50 dark:bg-gray-700 dark:border-gray-900 border border-border rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-card-foreground">Filtros de Busca</h2>
+                  <h2 className="text-2xl text-gray-900 dark:text-gray-50 font-bold text-card-foreground">Filtros de Busca</h2>
                   <button onClick={alternarFiltros} className="p-2 hover:bg-muted rounded-full transition-colors">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -90,7 +90,7 @@ export default function Home() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {/* Nome */}
                   <div className="md:col-span-2 lg:col-span-4">
-                    <label htmlFor="nome" className="block text-sm font-medium text-card-foreground mb-2">
+                    <label htmlFor="nome" className="block text-sm font-medium text-card-foreground mb-2 text-gray-900 dark:text-gray-50">
                       Nome da Pessoa
                     </label>
                     <input
@@ -106,7 +106,7 @@ export default function Home() {
 
                   {/* Sexo */}
                   <div className="md:col-span-1 lg:col-span-2">
-                    <label htmlFor="sexo" className="block text-sm font-medium text-card-foreground mb-2">
+                    <label htmlFor="sexo" className="block text-sm font-medium text-card-foreground mb-2 text-gray-900 dark:text-gray-50">
                       Sexo
                     </label>
                     <div className="relative">
@@ -127,7 +127,7 @@ export default function Home() {
 
                   {/* Idade Mínima */}
                   <div>
-                    <label htmlFor="faixaIdadeInicial" className="block text-sm font-medium text-card-foreground mb-2">
+                    <label htmlFor="faixaIdadeInicial" className="block text-sm font-medium text-card-foreground mb-2 text-gray-900 dark:text-gray-50">
                       Idade Mínima
                     </label>
                     <input
@@ -143,7 +143,7 @@ export default function Home() {
 
                   {/* Idade Máxima */}
                   <div>
-                    <label htmlFor="faixaIdadeFinal" className="block text-sm font-medium text-card-foreground mb-2">
+                    <label htmlFor="faixaIdadeFinal" className="block text-sm font-medium text-card-foreground mb-2 text-gray-900 dark:text-gray-50">
                       Idade Máxima
                     </label>
                     <input
@@ -159,7 +159,7 @@ export default function Home() {
 
                   {/* Status */}
                   <div className="md:col-span-1 lg:col-span-2">
-                    <label htmlFor="status" className="block text-sm font-medium text-card-foreground mb-2">
+                    <label htmlFor="status" className="block text-sm font-medium text-card-foreground mb-2 text-gray-900 dark:text-gray-50">
                       Situação
                     </label>
                     <div className="relative">
@@ -192,14 +192,14 @@ export default function Home() {
                       })
                       setNumeroPagina(0)
                     }}
-                    className="flex items-center gap-2 px-4 py-2 bg-destructive/10 hover:bg-destructive/20 text-destructive border border-destructive/20 rounded-lg font-medium transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 dark:text-red-500 bg-destructive/10 hover:bg-destructive/20 text-destructive border border-destructive/20 rounded-lg font-medium transition-colors"
                   >
                     <TrashIcon className="w-4 h-4" />
                     Limpar Filtros
                   </button>
                   <button
                     onClick={alternarFiltros}
-                    className="ml-auto px-6 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-medium transition-colors"
+                    className="ml-auto px-6 py-2 bg-primary dark:text-gray-50 hover:bg-primary/90 text-primary-foreground rounded-lg font-medium transition-colors"
                   >
                     Aplicar Filtros
                   </button>

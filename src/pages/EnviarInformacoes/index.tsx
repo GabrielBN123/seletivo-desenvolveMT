@@ -50,7 +50,7 @@ export default function EnviarInformacoes() {
       reader.onloadend = () => {
         if (reader.result) {
           const base64 = (reader.result as string).split(",")[1]
-          setAnexosBase64([base64])
+          setAnexosBase64([base64]);
         }
       }
       reader.readAsDataURL(file)
