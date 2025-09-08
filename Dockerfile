@@ -1,13 +1,24 @@
-# Etapa única: nginx com build já feito
+## Multi-stage: build com Node + serve com Nginx
 
+# 1) Build
+FROM node:18-alpine AS build
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --no-audit --no-fund
+
+COPY . .
+RUN npm run build
+
+# 2) Serve
 FROM nginx:alpine
 
-# Copia o build local para o nginx
-COPY dist /usr/share/nginx/html
-
-# Substitui config padrão do nginx
+# Remover config padrão e usar a nossa
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d
+
+# Copiar a build gerada para a pasta pública do Nginx
+COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
 
