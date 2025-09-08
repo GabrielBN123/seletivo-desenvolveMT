@@ -61,8 +61,7 @@ Pré-requisitos: Docker e Docker Compose instalados.
 
 #### Usando Docker Compose
 ```bash
-docker compose build
-docker compose up -d
+docker-compose up --build
 ```
 Acesse em: **http://localhost:8080**
 
