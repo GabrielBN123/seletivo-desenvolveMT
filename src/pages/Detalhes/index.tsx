@@ -83,6 +83,7 @@ export default function Detalhes() {
 			console.error("Erro ao carregar informações enviadas:", err)
 		}
 	}
+	
 
 	const { nome, idade, sexo, vivo, urlFoto, ultimaOcorrencia } = dados || {}
 
@@ -218,7 +219,7 @@ export default function Detalhes() {
 							</div>
 						</div>
 
-						{ultimaOcorrencia?.listaCartaz?.length > 0 && (
+						{ultimaOcorrencia && ultimaOcorrencia?.listaCartaz?.length > 0 && (
 							<div className="bg-card border border-border rounded-2xl p-4 shadow-sm">
 								<h2 className="text-lg font-semibold text-card-foreground mb-3 flex items-center gap-2">
 									<svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">

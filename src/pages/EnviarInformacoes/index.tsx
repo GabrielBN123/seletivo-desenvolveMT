@@ -297,7 +297,7 @@ export default function EnviarInformacoes() {
                 disabled={!formValido || carregando}
                 className={`w-full px-6 py-3 rounded-lg font-semibold transition-all duration-200 ${
                   formValido && !carregando
-                    ? "bg-primary-600 hover:bg-primary-700 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                    ? "bg-primary-600 hover:bg-primary-700 dark:text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                     : "bg-slate-300 dark:bg-slate-600 text-slate-500 dark:text-slate-400 cursor-not-allowed"
                 }`}
               >

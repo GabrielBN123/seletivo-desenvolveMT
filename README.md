@@ -45,9 +45,34 @@ Proprietário: Gabriel Batista
 
 ## ⚙️ Como Rodar
 
-Você pode rodar a aplicação de duas formas: localmente (Vite dev server) ou via Docker (Nginx servindo a build de produção).
+Você pode rodar a aplicação de duas formas: via Docker (produção) ou localmente com Vite (desenvolvimento).
 
-### Rodar localmente (desenvolvimento)
+### 1) Rodar com Docker (produção)
+
+Pré-requisitos: Docker e Docker Compose instalados e em execução.
+
+Construir e subir os containers:
+
+```bash
+docker compose build
+docker compose up -d
+```
+
+Acesse no navegador: **http://localhost:8080**
+
+Parar e remover containers/recursos criados pelo Compose:
+
+```bash
+docker compose down
+```
+
+Rebuild sem cache (útil após mudanças):
+
+```bash
+docker compose build --no-cache && docker compose up -d
+```
+
+### 2) Rodar localmente (desenvolvimento)
 
 Clone o repositório:
 
@@ -91,57 +116,54 @@ Acesse no navegador: **http://localhost:5173/**
 
 ## 🐳 Docker
 
-Pré-requisitos: Docker instalado e em execução.
+A imagem é construída via multi-stage (Node para build e Nginx para servir). O `docker-compose.yml` já executa todo o processo de build e sobe um container Nginx servindo a pasta `dist/`.
 
-O `Dockerfile` utiliza uma etapa única do Nginx e copia a pasta `dist/` para dentro da imagem. Portanto, é necessário gerar a build localmente antes de construir a imagem.
+### Usando Docker Compose (recomendado)
 
-1) Gerar a build de produção do frontend:
+- Subir: `docker compose up -d`
+- Acessar: `http://localhost:8080`
+- Logs: `docker compose logs -f`
+- Reiniciar: `docker compose restart`
+- Parar/remover: `docker compose down`
+- Rebuild sem cache: `docker compose build --no-cache && docker compose up -d`
 
-```bash
-npm run build
-```
+### Usando Docker puro (alternativo)
 
-2) (Opcional, recomendado) Limpar imagens/containers antes de criar uma nova imagem
-
-ATENÇÃO: os comandos abaixo removem containers, imagens, redes e volumes NÃO utilizados. Se quiser realmente começar do zero, use o último comando (mais agressivo). Execute em PowerShell:
-
-```powershell
-# Parar e remover todos os containers (se houver)
-docker ps -aq | ForEach-Object { docker stop $_ }
-docker ps -aq | ForEach-Object { docker rm $_ }
-
-# Remover imagens não utilizadas (todas as não usadas por nenhum container)
-docker system prune -a -f
-
-# (Opcional) também remover volumes não utilizados
-docker volume prune -f
-```
-
-3) Construir a imagem Docker:
-
+1) Construir a imagem:
 ```bash
 docker build -t desenvolve-mt .
 ```
 
-4) Rodar o container:
-
+2) Rodar o container:
 ```bash
 docker run -d -p 8080:80 --name desenvolve-mt desenvolve-mt
 ```
 
-5) Acessar no navegador: http://localhost:8080
+3) Acessar: `http://localhost:8080`
 
-Rebuild após mudanças no código:
-
-```bash
-npm run build && docker build --no-cache -t desenvolve-mt . && docker stop desenvolve-mt && docker rm desenvolve-mt && docker run -d -p 8080:80 --name desenvolve-mt desenvolve-mt
-```
-
-Para parar e remover o container:
-
+4) Parar e remover:
 ```bash
 docker stop desenvolve-mt && docker rm desenvolve-mt
 ```
+
+### Dicas e limpeza de recursos Docker
+
+- Remover recursos não utilizados (cuidado, operação destrutiva):
+```bash
+docker system prune -f
+# Para também remover imagens não referenciadas por nenhum container:
+docker system prune -a -f
+```
+
+- Remover volumes não utilizados:
+```bash
+docker volume prune -f
+```
+
+- Ver containers em execução: `docker ps`
+- Ver todas as imagens: `docker images`
+
+No Windows (PowerShell), os comandos acima funcionam normalmente.
 
 ---
 

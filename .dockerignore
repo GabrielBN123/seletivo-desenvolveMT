@@ -1,2 +1,26 @@
+# Dependências e caches
 node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-store
+
+# Builds locais
+/dist
+
+# Ambiente/IDE
+.env
+.env.*
+.DS_Store
+*.swp
+*.swo
+.vscode
+.idea
+
+# Docker
+.docker
+Dockerfile.*
+
+# Git
 .git
+.gitignore
