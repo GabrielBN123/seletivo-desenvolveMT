@@ -1,5 +1,11 @@
 # 🚀 Projeto Prático - React + TypeScript + Vite
 
+## 📊 Informações do Candidato
+
+- **Nome:** Gabriel Batista da Silva Nogueira
+- **CPF:** 07613004147
+- **E-mail:** gabrielbdsn12@hotmail.com
+
 Este é um projeto prático desenvolvido para o processo seletivo DesenvolveMT.
 
 Proprietário: Gabriel Batista
