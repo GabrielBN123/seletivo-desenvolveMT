@@ -2,13 +2,14 @@
 
 ## 📊 Informações do Candidato
 
-- **Nome:** Gabriel Batista da Silva Nogueira
-- **CPF:** 07613004147
-- **E-mail:** gabrielbdsn12@hotmail.com
+- **Nome:** Gabriel Batista da Silva Nogueira  
+- **CPF:** 07613004147  
+- **E-mail:** gabrielbdsn12@hotmail.com  
 
-Este é um projeto prático desenvolvido para o processo seletivo DesenvolveMT.
+Este é um projeto prático desenvolvido para o processo seletivo **DesenvolveMT**.  
 
-Proprietário: Gabriel Batista
+Proprietário: **Gabriel Batista**
+
 ---
 
 ## 🛠️ Tecnologias Utilizadas
@@ -45,64 +46,64 @@ Proprietário: Gabriel Batista
 
 ## ⚙️ Como Rodar
 
-Você pode rodar a aplicação de duas formas: via Docker (produção) ou localmente com Vite (desenvolvimento).
+### 1) Clonar o repositório
 
-### 1) Rodar com Docker (produção)
+```bash
+git clone https://github.com/GabrielBN123/seletivo-desenvolveMT.git
+cd seletivo-desenvolveMT
+```
 
-Pré-requisitos: Docker e Docker Compose instalados e em execução.
+---
 
-Construir e subir os containers:
+### 2) Rodar com Docker (recomendado - produção)
 
+Pré-requisitos: Docker e Docker Compose instalados.  
+
+#### Usando Docker Compose
 ```bash
 docker compose build
 docker compose up -d
 ```
+Acesse em: **http://localhost:8080**
 
-Acesse no navegador: **http://localhost:8080**
+- Parar containers: `docker compose down`  
+- Rebuild sem cache: `docker compose build --no-cache && docker compose up -d`  
+- Logs: `docker compose logs -f`  
 
-Parar e remover containers/recursos criados pelo Compose:
-
+#### Usando Docker puro
+1. Construir imagem:  
 ```bash
-docker compose down
+docker build -t desenvolve-mt .
+```
+2. Rodar container:  
+```bash
+docker run -d -p 8080:80 --name desenvolve-mt desenvolve-mt
+```
+3. Acessar: **http://localhost:8080**  
+4. Parar/remover:  
+```bash
+docker stop desenvolve-mt && docker rm desenvolve-mt
 ```
 
-Rebuild sem cache (útil após mudanças):
+---
 
-```bash
-docker compose build --no-cache && docker compose up -d
-```
+### 3) Rodar localmente (alternativo - desenvolvimento)
 
-### 2) Rodar localmente (desenvolvimento)
-
-Clone o repositório:
-
-```bash
-git clone https://github.com/GabrielBN123/seletivo-desenvolveMT.git
-```
-
-Acesse a pasta do projeto:
-
-```bash
-cd seletivo-desenvolveMT
-```
-
-Instale as dependências:
-
+Instalar dependências:  
 ```bash
 npm install
 # ou
 yarn install
 ```
 
-Inicie o servidor de desenvolvimento:
-
+Rodar servidor de desenvolvimento:  
 ```bash
 npm run dev
 # ou
 yarn dev
 ```
 
-Acesse no navegador: **http://localhost:5173/**
+Acesse em: **http://localhost:5173/**
 
 ---
 
@@ -111,59 +112,6 @@ Acesse no navegador: **http://localhost:5173/**
 - `dev` → Roda o servidor de desenvolvimento  
 - `build` → Gera a versão de produção  
 - `preview` → Faz o preview da build de produção  
-
----
-
-## 🐳 Docker
-
-A imagem é construída via multi-stage (Node para build e Nginx para servir). O `docker-compose.yml` já executa todo o processo de build e sobe um container Nginx servindo a pasta `dist/`.
-
-### Usando Docker Compose (recomendado)
-
-- Subir: `docker compose up -d`
-- Acessar: `http://localhost:8080`
-- Logs: `docker compose logs -f`
-- Reiniciar: `docker compose restart`
-- Parar/remover: `docker compose down`
-- Rebuild sem cache: `docker compose build --no-cache && docker compose up -d`
-
-### Usando Docker puro (alternativo)
-
-1) Construir a imagem:
-```bash
-docker build -t desenvolve-mt .
-```
-
-2) Rodar o container:
-```bash
-docker run -d -p 8080:80 --name desenvolve-mt desenvolve-mt
-```
-
-3) Acessar: `http://localhost:8080`
-
-4) Parar e remover:
-```bash
-docker stop desenvolve-mt && docker rm desenvolve-mt
-```
-
-### Dicas e limpeza de recursos Docker
-
-- Remover recursos não utilizados (cuidado, operação destrutiva):
-```bash
-docker system prune -f
-# Para também remover imagens não referenciadas por nenhum container:
-docker system prune -a -f
-```
-
-- Remover volumes não utilizados:
-```bash
-docker volume prune -f
-```
-
-- Ver containers em execução: `docker ps`
-- Ver todas as imagens: `docker images`
-
-No Windows (PowerShell), os comandos acima funcionam normalmente.
 
 ---
 
@@ -177,4 +125,4 @@ Desenvolvido por **Gabriel Batista**
 
 ## 📝 Licença
 
-Este projeto é de uso livre para estudo e prática.
+Este projeto é de uso livre para estudo e prática.  
