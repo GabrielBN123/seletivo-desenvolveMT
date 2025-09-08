@@ -177,5 +177,4 @@ Desenvolvido por **Gabriel Batista**
 
 ## 📝 Licença
 
-Este projeto é de uso livre para estudo e prática.  
-Sinta-se à vontade para clonar e modificar.
+Este projeto é de uso livre para estudo e prática.
